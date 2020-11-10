@@ -1,0 +1,5 @@
+[mysqld]
+skip-host-cache
+skip-name-resolve
+max_allowed_packet=20M
+character-set-server=UTF8MB4
