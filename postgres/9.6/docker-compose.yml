@@ -1,0 +1,24 @@
+version: '3.1'
+services:
+  demoBackup:
+    container_name: postgres-demoBackup
+    image: registry.rd.lan/ici/demo-postgres:7.9.4
+    volumes:
+      - postgresBackupVolume:/opt/bonita/dump
+    restart: always
+  postgres93:
+    build:
+      context: "."
+    image: registry.rd.lan/bonitasoft/postgres-9.6
+    restart: always
+    depends_on:
+      - demoBackup
+    volumes:
+      - postgresBackupVolume:/opt/bonita/dump
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=postgres
+volumes:
+  postgresBackupVolume:
+
