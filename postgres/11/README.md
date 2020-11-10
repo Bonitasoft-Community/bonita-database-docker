@@ -1,4 +1,6 @@
-# This image is based on postgres 11.9-alpine image
+# Pre-configured Postgres database image to work with Bonita 
+
+This image is based on the [official Postgres image](https://hub.docker.com/_/postgres)
 
 ## Additions
 
@@ -10,10 +12,9 @@ set required `max_prepared_transactions` setting required by Bonita
 ### Databases
 
 When starting a new container, it will create two databases...
-* `bonita`
-* `business_data`
+* `bonita` (connection user `bonita`, password `bpm`)
+* `business_data` (connection user `business_data`, password `bpm`)
 
-...and a user `bonita` with password `bpm` to access them.
 
 ## Build it
 
@@ -21,7 +22,7 @@ When starting a new container, it will create two databases...
 
 ```
 # will use 'latest' as tag  
-docker build -t bonitasoft/bonita-postgres:11.9-alpine .`
+docker build -t bonitasoft/bonita-postgres:11.9-alpine .
 ```
 
 ## Restore dump
@@ -63,7 +64,7 @@ then run the docker using volume `-v <path to dumps>:/opt/bonita/dump`
 
 
 ### Restore dump from file not using default 'bonita' schema
-* create container with:
+* create a container with:
   * extra parameter `-e POSTGRES_PASSWORD=mysecretpassword`, in order to be able to access the tables with a known user (`postgres`) and password
   * extra volume mapping parameter with the dump file, to access it easily from within the container  
   Eg. `docker run --name postgres-from-dump -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d -v /home/manu/work:/opt/bonita/dump bonitasoft/bonita-postgres:11.9-alpine

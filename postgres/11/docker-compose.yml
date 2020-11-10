@@ -9,7 +9,7 @@ services:
   postgres11:
     build:
       context: "."
-    image: registry.rd.lan/bonitasoft/postgres-11
+    image: bonitasoft/bonita-postgres
     restart: always
     depends_on:
       - demoBackup
