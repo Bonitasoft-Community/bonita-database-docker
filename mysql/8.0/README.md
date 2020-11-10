@@ -1,4 +1,6 @@
-# This image is based on MySQL 8.0 image
+# Pre-configured MySQL database image to work with Bonita 
+
+This image is based on the [official MySQL image](https://hub.docker.com/_/mysql)
 
 ## additions 
 
@@ -16,18 +18,18 @@
 
 ```
 # will use 'latest' as tag
-docker build -t registry.rd.lan/bonitasoft/mysql-8.0.14:latest .`
+docker build -t bonitasoft/bonita-mysql:8.0.22 .
 ```
 
 ## run it
 
 default way
 
-`docker run --name bonita-mysql-8.0.14 -p 3306:3306 -d registry.rd.lan/bonitasoft/mysql-8.0.14:latest`
+`docker run --name bonita-mysql-8.0 -p 3306:3306 -d bonitasoft/bonita-mysql:8.0.22`
 
 using local volume for backup/restore
 
-`docker run --name bonita-mysql-8.0.14 -p 3306:3306 -d -v"/myPath:/opt/bonita/sql" registry.rd.lan/bonitasoft/mysql-8.0.14:latest`
+`docker run --name bonita-mysql-8.0 -p 3306:3306 -d -v"/myPath:/opt/bonita/sql" bonitasoft/bonita-mysql:8.0.22`
 
 
 ## shell
@@ -36,4 +38,4 @@ using local volume for backup/restore
 
 ## push Docker image
 
-`docker push registry.rd.lan/bonitasoft/mysql-8.0.14:latest`
+`docker push bonitasoft/bonita-mysql:8.0.22`
