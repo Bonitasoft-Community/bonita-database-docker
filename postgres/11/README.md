@@ -1,4 +1,4 @@
-# This image is based on postgres 11.2-alpine image
+# This image is based on postgres 11.9-alpine image
 
 ## Additions
 
@@ -21,14 +21,7 @@ When starting a new container, it will create two databases...
 
 ```
 # will use 'latest' as tag  
-docker build -t registry.rd.lan/bonitasoft/postgres-11 .`
-```
-
-## Deploy to internal registry
-
-```
-# will use 'latest' as tag  
-docker push registry.rd.lan/bonitasoft/postgres-11
+docker build -t bonitasoft/bonita-postgres:11.9-alpine .`
 ```
 
 ## Restore dump
@@ -73,7 +66,7 @@ then run the docker using volume `-v <path to dumps>:/opt/bonita/dump`
 * create container with:
   * extra parameter `-e POSTGRES_PASSWORD=mysecretpassword`, in order to be able to access the tables with a known user (`postgres`) and password
   * extra volume mapping parameter with the dump file, to access it easily from within the container  
-  Eg. `docker run --name postgres-from-dump -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d -v /home/manu/work:/opt/bonita/dump registry.rd.lan/bonitasoft/postgres-11:latest`
+  Eg. `docker run --name postgres-from-dump -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d -v /home/manu/work:/opt/bonita/dump bonitasoft/bonita-postgres:11.9-alpine
 * access the new container through `docker exec -ti <container_id>`
 * run `psql -U postgres bonita < ./my_dump_file.sql`
 
@@ -83,19 +76,19 @@ default way
 
 ```
 # will use 'latest' as tag  
-docker run -p 5432:5432 -d registry.rd.lan/bonitasoft/postgres-11
+docker run -p 5432:5432 -d bonitasoft/bonita-postgres:11.9-alpine
 ```
 
 recommended way, to have datafiles out of container: bind a volume to **/var/lib/postgresql/data**
 
     # will use 'latest' as tag  
-    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" registry.rd.lan/bonitasoft/postgres-11
+    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" bonitasoft/bonita-postgres:11.9-alpine
 
 
 with local volume for backup/restore and script exchange
 
     # will use 'latest' as tag  
-    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" -v"/MY_SQL_FOLDER:/opt/bonita/sql" registry.rd.lan/bonitasoft/postgres-11 
+    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" -v"/MY_SQL_FOLDER:/opt/bonita/sql" bonitasoft/bonita-postgres:11.9-alpine 
 
 
 ## Execute shell command inside container
