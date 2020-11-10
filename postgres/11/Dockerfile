@@ -1,4 +1,4 @@
-FROM postgres:11.2-alpine
+FROM postgres:11.9-alpine
 
 LABEL maintainer="Bonita R&D Runtime team <rd.runtime@bonitasoft.com>"
 LABEL vendor="bonitasoft"
