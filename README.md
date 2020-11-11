@@ -7,22 +7,17 @@
 * PostgreSQL
     * [postgres 9.6](postgres/9.6/README.md)
     * [postgres 11](postgres/11/README.md)
+* Microsoft SQL Server (under the [MIT license](https://github.com/microsoft/mssql-docker/blob/master/LICENSE))
+  * [sqlserver 2017](sqlserver/2017/README.md)
+  * [sqlserver 2019](sqlserver/2019/README.md)
 * Oracle
-    * To be completed, as there is a Redistribution License limitation
-* Microsoft SQL Server
-    * To be completed, as there is a Redistribution License limitation
+    * To be completed, as there is a redistribution License limitation
 
 ## Pre-configured databases
 
 * bonita (user bonita/bpm)
-* business_data (user bonita/bpm)
+* business_data (user business_data/bpm)
 
 ## Build images locally
 
-### Build images locally
-
 See individual README in sub-folders.
-
-## Build images on CI
-
-See ~~Jenkinsfile~~ => Github actions?
