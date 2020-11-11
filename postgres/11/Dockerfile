@@ -3,6 +3,8 @@ FROM postgres:11.9-alpine
 LABEL maintainer="Bonita R&D Runtime team <rd.runtime@bonitasoft.com>"
 LABEL vendor="bonitasoft"
 
+ENV POSTGRES_PASSWORD=DEFAULT_BONITA_ROOT_PSSWD
+
 # allow to bind volume for database backup/restore
 VOLUME /opt/bonita/sql
 
