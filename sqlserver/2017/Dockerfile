@@ -1,6 +1,12 @@
 FROM mcr.microsoft.com/mssql/server:2017-CU22-ubuntu-16.04
 
-LABEL maintainer="Bonita R&D Runtime team <rd.runtime@bonitasoft.com>"
+LABEL maintainer="Bonita R&D Runtime team: anthony.birembaut@bonitasoft.com,\
+emmanuel.duchastenier@bonitasoft.com,\
+baptiste.mesta@bonitasoft.com,\
+pascal.garcia@bonitasoft.com,\
+bishal.thapaliya@bonitasoft.com,\
+danila.mazour@bonitasoft.com,\
+dumitru.corini@bonitasoft.com"
 LABEL vendor="bonitasoft"
 
 ENV ACCEPT_EULA Y
