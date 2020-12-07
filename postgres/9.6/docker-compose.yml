@@ -9,7 +9,7 @@ services:
   postgres93:
     build:
       context: "."
-    image: registry.rd.lan/bonitasoft/postgres-9.6
+    image: bonitasoft/bonita-postgres:9.6
     restart: always
     depends_on:
       - demoBackup

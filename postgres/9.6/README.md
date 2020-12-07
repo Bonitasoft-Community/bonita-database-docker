@@ -1,4 +1,6 @@
-# This image is based on postgres 9.6 image
+# Pre-configured Postgres database image to work with Bonita 
+
+This image is based on the [official Postgres image](https://hub.docker.com/_/postgres)
 
 ## Additions
 
@@ -10,26 +12,15 @@ set required `max_prepared_transactions` setting required by Bonita
 ### Databases
 
 When starting a new container, it will create two databases...
-* `bonita`
-* `business_data`
+* `bonita` (connection user `bonita`, password `bpm`)
+* `business_data` (connection user `business_data`, password `bpm`)
 
-...and a user `bonita` with password `bpm` to access them.
 
 ## Build it
 
     Note: tag is just an argument and is not provided by Dockerfile. so 
 
-```
-# will use 'latest' as tag  
-docker build -t registry.rd.lan/bonitasoft/postgres-9.6 .`
-```
-
-## Deploy to internal registry
-
-```
-# will use 'latest' as tag  
-docker push registry.rd.lan/bonitasoft/postgres-9.6
-```
+`docker build -t bonitasoft/bonita-postgres:9.6 .`
 
 ## Restore dump
 
@@ -69,11 +60,11 @@ then run the docker using volume `-v <path to dumps>:/opt/bonita/dump`
     Note: if container already exists, it must be removed, using `docker rm <CONTAINER_ID>`, unless restore won't be applied
 
 
-#### Restore dump from file not using default 'bonita' schema
+### Restore dump from file not using default 'bonita' schema
 * create a container with:
   * extra parameter `-e POSTGRES_PASSWORD=mysecretpassword`, in order to be able to access the tables with a known user (`postgres`) and password
   * extra volume mapping parameter with the dump file, to access it easily from within the container  
-  Eg. `docker run --name postgres-from-dump -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d -v /home/manu/work:/opt/bonita/dump registry.rd.lan/bonitasoft/postgres-9.6:latest`
+  Eg. `docker run --name postgres-from-dump -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d -v /home/manu/work:/opt/bonita/dump bonitasoft/bonita-postgres:9.6
 * access the new container through `docker exec -ti <container_id>`
 * run `psql -U postgres bonita < ./my_dump_file.sql`
 
@@ -81,21 +72,16 @@ then run the docker using volume `-v <path to dumps>:/opt/bonita/dump`
 
 default way
 
-```
-# will use 'latest' as tag  
-docker run -p 5432:5432 -d registry.rd.lan/bonitasoft/postgres-9.6
-```
+`docker run -p 5432:5432 -d bonitasoft/bonita-postgres:9.6`
 
 recommended way, to have datafiles out of container: bind a volume to **/var/lib/postgresql/data**
 
-    # will use 'latest' as tag  
-    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" registry.rd.lan/bonitasoft/postgres-11
+`docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" bonitasoft/bonita-postgres:9.6`
 
 
 with local volume for backup/restore and script exchange
 
-# will use 'latest' as tag  
-    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" -v"/MY_SQL_FOLDER:/opt/bonita/sql" registry.rd.lan/bonitasoft/postgres-11 
+`docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" -v"/MY_SQL_FOLDER:/opt/bonita/sql" bonitasoft/bonita-postgres:9.6` 
 
 
 ## Execute shell command inside container
@@ -104,7 +90,7 @@ with local volume for backup/restore and script exchange
 
 Example to display Bonita version number:
 
-    docker exec -it <CONTAINER_ID> psql -U bonita -c 'select version from platform' | grep "7\."
+`docker exec -it <CONTAINER_ID> psql -U bonita -c 'select version from platform' | grep "7\."`
 
 
 ## Test it

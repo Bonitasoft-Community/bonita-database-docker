@@ -11,7 +11,7 @@
   * [sqlserver 2017](sqlserver/2017/README.md)
   * [sqlserver 2019](sqlserver/2019/README.md)
 * Oracle
-    * To be completed, as there is a redistribution License limitation
+    * Not available publicly, as there is a redistribution License limitation
 
 ## Pre-configured databases
 

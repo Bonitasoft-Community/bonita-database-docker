@@ -20,10 +20,7 @@ When starting a new container, it will create two databases...
 
     Note: tag is just an argument and is not provided by Dockerfile. so 
 
-```
-# will use 'latest' as tag  
-docker build -t bonitasoft/bonita-postgres:11.9 .
-```
+`docker build -t bonitasoft/bonita-postgres:11.9 .`
 
 ## Restore dump
 
@@ -75,21 +72,16 @@ then run the docker using volume `-v <path to dumps>:/opt/bonita/dump`
 
 default way
 
-```
-# will use 'latest' as tag  
-docker run -p 5432:5432 -d bonitasoft/bonita-postgres:11.9
-```
+`docker run -p 5432:5432 -d bonitasoft/bonita-postgres:11.9`
 
 recommended way, to have datafiles out of container: bind a volume to **/var/lib/postgresql/data**
 
-    # will use 'latest' as tag  
-    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" bonitasoft/bonita-postgres:11.9
+`docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" bonitasoft/bonita-postgres:11.9`
 
 
 with local volume for backup/restore and script exchange
 
-    # will use 'latest' as tag  
-    docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" -v"/MY_SQL_FOLDER:/opt/bonita/sql" bonitasoft/bonita-postgres:11.9 
+`docker run -p 5432:5432 -d -v "/PATH_TO_DATA_FILES:/var/lib/postgresql/data" -v"/MY_SQL_FOLDER:/opt/bonita/sql" bonitasoft/bonita-postgres:11.9`
 
 
 ## Execute shell command inside container
@@ -98,7 +90,7 @@ with local volume for backup/restore and script exchange
 
 Example to display Bonita version number:
 
-    docker exec -it <CONTAINER_ID> psql -U bonita -c 'select version from platform' | grep "7\."
+`docker exec -it <CONTAINER_ID> psql -U bonita -c 'select version from platform' | grep "7\."`
 
 
 ## Test it
