@@ -6,7 +6,9 @@ This image is based on the [official Postgres image](https://hub.docker.com/_/po
 
 ### Configuration
 
-set required `max_prepared_transactions` setting required by Bonita
+Set required `max_prepared_transactions` setting required by Bonita.
+
+Set optimized memory settings + other advice by Dalibo expert audit.
 
 
 ### Databases

@@ -18,7 +18,7 @@ VOLUME /opt/bonita/sql
 VOLUME /opt/bonita/dump
 
 COPY 0_init-databases.sql /docker-entrypoint-initdb.d/0_init-databases.sql
-COPY 1_set-max_prepared_transactions.sh /docker-entrypoint-initdb.d/1_set-max_prepared_transactions.sh
+COPY 1_set-optimized-config.sh /docker-entrypoint-initdb.d/1_set-optimized-config.sh
 COPY 2_restore_dump.sh /docker-entrypoint-initdb.d/2_restore_dump.sh
 COPY healthcheck.sh /usr/local/bin/healthcheck.sh
 
