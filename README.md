@@ -21,3 +21,18 @@
 ## Build images locally
 
 See individual README in sub-folders.
+
+## Publish images on Docker Hub
+
+Requires to have the image built locally.
+
+* Login onto Docker Hub with account `bonitadev` (see Keeper for account credentials):
+
+      docker login -u bonitadev docker.io
+
+* push the new image and its tagged name + latest tag (Example for Postgres latest image):
+
+      docker push bonitasoft/bonita-postgres:12.6
+      docker tag bonitasoft/bonita-postgres:12.6 bonitasoft/bonita-postgres:latest
+      docker push bonitasoft/bonita-postgres:latest
+* Ensure the images are pushed, accessing https://hub.docker.com/u/bonitasoft and checking tags are there.
