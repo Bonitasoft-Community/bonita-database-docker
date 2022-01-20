@@ -9,6 +9,9 @@ Default value for `MSSQL_PID` environment variable is `Express`, but you can cha
 
 See more configuration on [Microsoft Official base image](https://hub.docker.com/_/microsoft-mssql-server)
 
+Check the list of available tags [on Microsoft site](https://mcr.microsoft.com/v2/mssql/server/tags/list)
+to update to the latest version.
+
 ### databases
 
 This image already contains the 2 databases:
