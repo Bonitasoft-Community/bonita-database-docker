@@ -22,8 +22,8 @@ IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'bonita')
 BEGIN
     CREATE DATABASE [bonita]
     -- Enable Row Versioning-Based Isolation Levels
-    ALTER DATABASE bonita SET ALLOW_SNAPSHOT_ISOLATION OFF
-    ALTER DATABASE bonita SET READ_COMMITTED_SNAPSHOT OFF
+    ALTER DATABASE bonita SET ALLOW_SNAPSHOT_ISOLATION ON
+    ALTER DATABASE bonita SET READ_COMMITTED_SNAPSHOT ON
 END
 GO
 
@@ -32,8 +32,8 @@ IF NOT EXISTS (SELECT name FROM master.dbo.sysdatabases WHERE name = N'business_
 BEGIN
     CREATE DATABASE [business_data]
     -- Enable Row Versioning-Based Isolation Levels
-    ALTER DATABASE business_data SET ALLOW_SNAPSHOT_ISOLATION OFF
-    ALTER DATABASE business_data SET READ_COMMITTED_SNAPSHOT OFF
+    ALTER DATABASE business_data SET ALLOW_SNAPSHOT_ISOLATION ON
+    ALTER DATABASE business_data SET READ_COMMITTED_SNAPSHOT ON
 END
 GO
 
