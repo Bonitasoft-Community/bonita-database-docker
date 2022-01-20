@@ -20,19 +20,19 @@ This image already contains the 2 databases:
 
 ## build it
 
-    docker build -t bonitasoft/bonita-sqlserver:2019-CU8 .
+    docker build -t bonitasoft/bonita-sqlserver:2019-CU14 .
 
 ## deploy to a registry
 
-    docker push bonitasoft/bonita-sqlserver:2019-CU8
+    docker push bonitasoft/bonita-sqlserver:2019-CU14
 
 ## run it
 
 The simple way:
 
-    docker run -d --name bonita-sqlserver-2019 -p :1433 bonitasoft/bonita-sqlserver:2019-CU8
+    docker run -d --name bonita-sqlserver-2019 -p :1433 bonitasoft/bonita-sqlserver:2019-CU14
 
 The more-complete way:
 
     docker run -d --name bonita-sqlserver-2019 -e 'MSSQL_SA_PASSWORD=S0mES3cRet!P455W0rD' -e 'MSSQL_RPC_PORT=135' -e 'MSSQL_DTC_TCP_PORT=51000' \
-        -p 51433:1433 -p 135:135 -p 51000:51000 bonitasoft/bonita-sqlserver:2019-CU8
+        -p 51433:1433 -p 135:135 -p 51000:51000 bonitasoft/bonita-sqlserver:2019-CU14
