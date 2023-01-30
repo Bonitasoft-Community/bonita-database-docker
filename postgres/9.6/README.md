@@ -90,7 +90,7 @@ with local volume for backup/restore and script exchange
 
 Example to display Bonita version number:
 
-`docker exec -it <CONTAINER_ID> psql -U bonita -c 'select version from platform' | grep "7\."`
+`docker exec -it <CONTAINER_ID> psql -U bonita -X -A -w -t -c 'select version from platform'`
 
 
 ## Test it
