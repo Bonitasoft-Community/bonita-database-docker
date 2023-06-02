@@ -1,41 +1,67 @@
-# Pre-configured MySQL database image to work with Bonita 
+# Pre-configured MySQL database image to work with Bonita
 
-This image is based on the [official MySQL image](https://hub.docker.com/_/mysql)
+This image is based on the [official MySQL image](https://hub.docker.com/_/mysql).
 
-## additions 
+## Additions
 
-### configuration
+### Configuration
 
-[/etc/mysql/conf.d/docker.cnf](docker.cnf) config file
+See [docker.cnf](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/mysql/8.0/docker.cnf) config
+file (located in `/etc/mysql/conf.d/` directory within the image itself).
 
+### Databases
 
-### databases
+This image is configured with the two databases required by Bonita:
 
-* `bonita`:  owned by user `bonita` with password `bpm`  
-* `business_data`: owned by user `business_data` with password `bpm`
+* `bonita` (connection user `bonita`, password `bpm`)
+* `business_data` (connection user `business_data`, password `bpm`)
 
-## build it
+## How to use the image
 
+- Default way:
+
+```shell
+docker run -d --name bonita-mysql -p 3306:3306 bonitasoft/bonita-mysql:8.0.33
 ```
-# will use 'latest' as tag
-docker build -t bonitasoft/bonita-mysql:8.0.22 .
+
+- Using local volume for backup/restore:
+
+```shell
+docker run -d \
+      --name bonita-mysql \
+      -p 3306:3306 \
+      -v /my/sql/folder:/opt/bonita/sql \
+      bonitasoft/bonita-mysql:8.0.33
 ```
 
-## run it
+## Container shell access
 
-default way
+```shell
+docker exec -it bonita-mysql bash
+```
 
-`docker run --name bonita-mysql-8.0 -p 3306:3306 -d bonitasoft/bonita-mysql:8.0.22`
+## Viewing MySQL logs
 
-using local volume for backup/restore
+```shell
+docker logs bonita-mysql
+```
 
-`docker run --name bonita-mysql-8.0 -p 3306:3306 -d -v"/myPath:/opt/bonita/sql" bonitasoft/bonita-mysql:8.0.22`
+## How to test this image
 
+See [docker-compose.yml](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/mysql/8.0/test/docker-compose.yml)
+or [docker-compose-community.yml](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/mysql/8.0/test/docker-compose-community.yml)
+for an example on how to test this image using a Bonita Docker image.
 
-## shell
+To execute it:
 
-`docker exec -ti bonita-mysql-8.0 bash`
+```shell
+docker-compose up --build -d
+# OR
+docker-compose -f docker-compose-community.yml up --build -d
+```
 
-## push Docker image
+To shut it down and clear your environment:
 
-`docker push bonitasoft/bonita-mysql:8.0.22`
+```shell
+docker-compose down -v --remove-orphans
+```
