@@ -6,6 +6,9 @@ services:
     environment:
       POSTGRES_PASSWORD: my-secret-pw
     restart: always
+  # uncomment those lines to mount a volume with your dumps (see README.md)
+  #    volumes:
+  #      - ~/my/test/dumps:/opt/bonita/dump
 
   bonita:
     image: bonita:2023.1
