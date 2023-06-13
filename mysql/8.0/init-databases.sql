@@ -11,6 +11,3 @@ GRANT ALL ON business_data.* to business_data;
 GRANT XA_RECOVER_ADMIN ON *.* to bonita, business_data;
 
 FLUSH PRIVILEGES;
-
-
-
