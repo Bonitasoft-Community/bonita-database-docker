@@ -1,23 +1,26 @@
+# Example on how to use SQL Server 2022 with a Subscription edition of Bonita
 services:
   bonita-db:
-    image: bonitasoft/bonita-postgres:15.3
+    image: bonitasoft/bonita-sqlserver:2022-CU4
     ports:
-      - 5432:5432
+      - "1433:1433"
     environment:
-      POSTGRES_PASSWORD: my-secret-pw
+      MSSQL_SA_PASSWORD: Change-Me-123
     restart: always
-  # uncomment those lines to mount a volume with your dumps (see README.md)
-  #    volumes:
-  #      - ~/my/test/dumps:/opt/bonita/dump
 
   bonita:
-    image: bonita:2023.1
+    image: bonitasoft.jfrog.io/docker/bonita-subscription
+    # update the hostname with the one used when generating the license
+    hostname: localhost
+    volumes:
+      # replace ~/bonita-lic with the folder containing the license
+      - ~/bonita-lic:/opt/bonita_lic/
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      - DB_VENDOR=postgres
+      - DB_VENDOR=sqlserver
       - DB_HOST=bonita-db
-      - DB_PORT=5432
+      - DB_PORT=1433
       - DB_NAME=bonita
       - DB_USER=bonita
       - DB_PASS=bpm
@@ -33,6 +36,7 @@ services:
       - |
         set -e
         echo 'Waiting for database to be available'
+        sleep 10 # wait a bit before doing checks
         maxTries=10
         idxTries=$$maxTries
         while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do

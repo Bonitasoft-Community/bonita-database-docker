@@ -1,26 +1,21 @@
+# Example on how to use MySQL 8.0 with a Community edition of Bonita
 services:
   bonita-db:
-    image: bonitasoft/bonita-postgres:15.3
+    image: bonitasoft/bonita-mysql:8.0.33
     ports:
-      - 5432:5432
+      - "3306:3306"
     environment:
-      POSTGRES_PASSWORD: my-secret-pw
+      MYSQL_ROOT_PASSWORD: my-secret-pw
     restart: always
-    # uncomment those lines to mount a volume with your dumps (see README.md)
-    #    volumes:
-    #      - ~/my/test/dumps:/opt/bonita/dump
 
   bonita:
-    image: bonitasoft.jfrog.io/docker/bonita-subscription:2023.1
-    hostname: localhost
-    volumes:
-      - ~/bonita-lic:/opt/bonita_lic/
+    image: bonita
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      - DB_VENDOR=postgres
+      - DB_VENDOR=mysql
       - DB_HOST=bonita-db
-      - DB_PORT=5432
+      - DB_PORT=3306
       - DB_NAME=bonita
       - DB_USER=bonita
       - DB_PASS=bpm
@@ -38,7 +33,7 @@ services:
         echo 'Waiting for database to be available'
         maxTries=10
         idxTries=$$maxTries
-        while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do
+        while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 -z "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do
           sleep 1
           ((idxTries--))
         done

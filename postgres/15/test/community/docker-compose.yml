@@ -1,20 +1,24 @@
+# Example on how to use Postgres 15 with a Community edition of Bonita
 services:
   bonita-db:
-    image: bonitasoft/bonita-sqlserver:2022-CU4
+    image: bonitasoft/bonita-postgres:15.3
     ports:
-      - 1433:1433
+      - "5432:5432"
     environment:
-      MSSQL_SA_PASSWORD: Change-Me-123
+      POSTGRES_PASSWORD: my-secret-pw
     restart: always
+    # uncomment those lines to mount a volume with your dumps (see README.md)
+    #    volumes:
+    #      - ~/my/test/dumps:/opt/bonita/dump
 
   bonita:
-    image: bonita:2023.1
+    image: bonita
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      - DB_VENDOR=sqlserver
+      - DB_VENDOR=postgres
       - DB_HOST=bonita-db
-      - DB_PORT=1433
+      - DB_PORT=5432
       - DB_NAME=bonita
       - DB_USER=bonita
       - DB_PASS=bpm
@@ -30,7 +34,6 @@ services:
       - |
         set -e
         echo 'Waiting for database to be available'
-        sleep 10 # wait a bit before doing checks
         maxTries=10
         idxTries=$$maxTries
         while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do

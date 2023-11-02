@@ -106,20 +106,16 @@ Then run the docker using volume `-v /my/postgres/dump:/opt/bonita/dump`
 
 ## How to test this image
 
-See [docker-compose.yml](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/postgres/15/test/docker-compose.yml)
-or [docker-compose-community.yml](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/postgres/15/test/docker-compose-community.yml)
-for an example on how to test this image using a Bonita Docker image.
+See `docker-compose.yml` files under [test](test) folder with examples on how to test this image using a Bonita Docker image.
 
 To execute it:
 
 ```shell
-docker-compose up --build -d
-# OR
-docker-compose -f docker-compose-community.yml up --build -d
+docker compose up --build -d
 ```
 
 To shut it down and clear your environment:
 
 ```shell
-docker-compose down -v --remove-orphans
+docker compose down -v --remove-orphans
 ```

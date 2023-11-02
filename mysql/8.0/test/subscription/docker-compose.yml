@@ -1,23 +1,26 @@
+# Example on how to use MySQL 8.0 with a Subscription edition of Bonita
 services:
   bonita-db:
-    image: bonitasoft/bonita-sqlserver:2022-CU4
+    image: bonitasoft/bonita-mysql:8.0.33
     ports:
-      - 1433:1433
+      - "3306:3306"
     environment:
-      MSSQL_SA_PASSWORD: Change-Me-123
+      MYSQL_ROOT_PASSWORD: my-secret-pw
     restart: always
 
   bonita:
-    image: bonitasoft.jfrog.io/docker/bonita-subscription:2023.1
+    image: bonitasoft.jfrog.io/docker/bonita-subscription
+    # update the hostname with the one used when generating the license
     hostname: localhost
     volumes:
+      # replace ~/bonita-lic with the folder containing the license
       - ~/bonita-lic:/opt/bonita_lic/
     ports:
-      - 8080:8080
+      - "8080:8080"
     environment:
-      - DB_VENDOR=sqlserver
+      - DB_VENDOR=mysql
       - DB_HOST=bonita-db
-      - DB_PORT=1433
+      - DB_PORT=3306
       - DB_NAME=bonita
       - DB_USER=bonita
       - DB_PASS=bpm
@@ -33,10 +36,9 @@ services:
       - |
         set -e
         echo 'Waiting for database to be available'
-        sleep 10 # wait a bit before doing checks
         maxTries=10
         idxTries=$$maxTries
-        while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do
+        while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 -z "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do
           sleep 1
           ((idxTries--))
         done

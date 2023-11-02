@@ -1,0 +1,75 @@
+# Example on how to use Postgres 15 with a cluster of Bonita nodes
+services:
+  bonita-db:
+    image: bonitasoft/bonita-postgres:15.3
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: my-secret-pw
+    restart: always
+    # uncomment those lines to mount a volume with your dumps (see README.md)
+    #    volumes:
+    #      - ~/my/test/dumps:/opt/bonita/dump
+
+  bonita:
+    image: bonitasoft.jfrog.io/docker/bonita-subscription
+    # update the hostname with the one used when generating the license
+    hostname: localhost
+    volumes:
+      # replace ~/bonita-lic with the folder containing the license
+      - ~/bonita-lic:/opt/bonita_lic/
+    environment:
+      - DB_VENDOR=postgres
+      - DB_HOST=bonita-db
+      - DB_PORT=5432
+      - DB_NAME=bonita
+      - DB_USER=bonita
+      - DB_PASS=bpm
+      - BIZ_DB_NAME=business_data
+      - BIZ_DB_USER=business_data
+      - BIZ_DB_PASS=bpm
+      - CLUSTER_MODE=true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.bonita.entrypoints=web"
+      - "traefik.http.routers.bonita.rule=Host(`bonita.localhost`)"
+      - "traefik.http.services.bonita.loadbalancer.server.port=8080"
+      # Before Bonita 9.0, uncomment the two properties below to activate sticky session
+      #- "traefik.http.services.bonita.loadbalancer.sticky=true"
+      #- "traefik.http.services.bonita.loadbalancer.sticky.cookie.name=stickycookie"
+    restart: on-failure:2
+    depends_on:
+      - bonita-db
+    entrypoint:
+      - bash
+      - -c
+      - |
+        set -e
+        echo 'Waiting for database to be available'
+        maxTries=10
+        idxTries=$$maxTries
+        while [ $$idxTries -gt 0 ] && [ "$$(echo 'QUIT' | nc -w 1 "$$DB_HOST" "$$DB_PORT"; echo $$?)" -gt 0 ]; do
+          sleep 1
+          ((idxTries--))
+        done
+        if [ $$idxTries -le 0 ]; then
+          echo >&2 "Error: unable to contact database after $$maxTries tries"
+          exit 1
+        fi
+        echo 'Database is available'
+        exec /opt/files/startup.sh /opt/bonita/server/bin/catalina.sh run
+
+  traefik:
+    image: traefik:v2.9
+    container_name: traefik
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
