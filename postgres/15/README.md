@@ -104,22 +104,7 @@ Then run the docker using volume `-v /my/postgres/dump:/opt/bonita/dump`
 * Access the new container through `docker exec -it postgres-from-dump`
 * Run `psql -U postgres bonita < ./my_dump_file.sql`
 
-## How to test this image
+## How to use this image with Bonita
 
-See [docker-compose.yml](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/postgres/15/test/docker-compose.yml)
-or [docker-compose-community.yml](https://github.com/Bonitasoft-Community/bonita-database-docker/blob/main/postgres/15/test/docker-compose-community.yml)
-for an example on how to test this image using a Bonita Docker image.
-
-To execute it:
-
-```shell
-docker-compose up --build -d
-# OR
-docker-compose -f docker-compose-community.yml up --build -d
-```
-
-To shut it down and clear your environment:
-
-```shell
-docker-compose down -v --remove-orphans
-```
+Please refer to [Bonitasoft official documentation](https://documentation.bonitasoft.com/bonita/latest/runtime/bonita-docker-installation)
+for examples on how to run this image using a Bonita Docker image.
