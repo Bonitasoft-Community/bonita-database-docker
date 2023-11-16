@@ -1,0 +1,58 @@
+name: Publish image
+
+on:
+  workflow_dispatch:
+    inputs:
+      vendor:
+        description: Select the vendor image to publish on docker.io
+        type: choice
+        default: ''
+        required: true
+        options:
+         - postgres
+         - mysql
+         - sqlserver
+      vendorVersion:
+        description: Set the vendor specific version folder
+        type: string
+        default: ''
+        required: true
+      imageVersion:
+        description: Set the image version to publish on docker.io
+        type: string
+        default: ''
+        required: true
+      isLatest:
+        description: Publish a latest tag for this image
+        type: boolean
+        default: true
+        required: true
+
+env:
+  REGISTRY: docker.io
+  DOCKER_IO_REGISTRY_USER: bonitadev
+  IMAGE_NAME: bonitasoft/bonita-${{ github.event.inputs.vendor }}
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Login to docker.io registry
+        uses: docker/login-action@v3
+        with:
+          registry: docker.io
+          username: ${{ env.DOCKER_IO_REGISTRY_USER }}
+          password: ${{ secrets.DOCKER_IO_REGISTRY_PASSWORD }}
+      - name: Build image
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.event.inputs.imageVersion }} ${{ github.event.inputs.vendor }}/${{ github.event.inputs.imageVersion }}
+      - name: Publish to docker.io
+        run: |
+          docker push ${{ env.IMAGE_NAME }}
+      - name: Publish as latest to docker.io
+        if: {{ github.event.inputs.isLatest }}
+        run: |
+          docker tag ${{ env.IMAGE_NAME }}:${{ github.event.inputs.imageVersion }} ${{ env.IMAGE_NAME }}:latest
+          docker publish ${{ env.IMAGE_NAME }}:latest
+          
+          
