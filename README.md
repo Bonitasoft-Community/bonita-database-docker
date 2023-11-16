@@ -33,20 +33,9 @@ For instance with PostgreSQL: `docker build -t bonitasoft/bonita-postgres:15.4 .
 
 ## Publish images on Docker Hub
 
-Requires to have the image built locally.
+Use the publication Github action:
 
-1. Login onto Docker Hub with account `bonitadev` (see Keeper for account credentials):
-
-    ```shell
-    docker login -u bonitadev docker.io
-    ```
-
-2. Push the image and its tagged name + latest tag:
-
-    ```shell
-    docker push bonitasoft/bonita-<vendor>:<version>
-    docker tag bonitasoft/bonita-<vendor>:<version> bonitasoft/bonita-<vendor>:latest
-    docker push bonitasoft/bonita-<vendor>:latest
-    ```
-
-3. Ensure the images are pushed, accessing https://hub.docker.com/u/bonitasoft and checking tags are there.
+* Select the database vendor
+* Set the vendor version folder
+* Set an image version
+* Set if this version should be tagged as latest 
