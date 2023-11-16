@@ -45,7 +45,7 @@ jobs:
           username: ${{ env.DOCKER_IO_REGISTRY_USER }}
           password: ${{ secrets.DOCKER_IO_REGISTRY_PASSWORD }}
       - name: Build image
-        run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.event.inputs.imageVersion }} ${{ github.event.inputs.vendor }}/${{ github.event.inputs.imageVersion }}
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.event.inputs.imageVersion }} ${{ github.event.inputs.vendor }}/${{ github.event.inputs.vendorVersion }}
       - name: Publish to docker.io
         run: |
           docker push ${{ env.IMAGE_NAME }}
