@@ -48,7 +48,7 @@ jobs:
         run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.event.inputs.imageVersion }} ${{ github.event.inputs.vendor }}/${{ github.event.inputs.vendorVersion }}
       - name: Publish to docker.io
         run: |
-          docker push ${{ env.IMAGE_NAME }}
+          docker push ${{ env.IMAGE_NAME }}:${{ github.event.inputs.imageVersion }}
       - name: Publish as latest to docker.io
         if: ${{ github.event.inputs.isLatest }}
         run: |
