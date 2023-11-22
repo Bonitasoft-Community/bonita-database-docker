@@ -8,9 +8,10 @@ if [ -f /var/lib/postgresql/restore.inProgress ]; then
   exit 1
 fi
 
-user="${POSTGRES_USER:-bonita}"
-db="${POSTGRES_DB:-$user}"
-export PGPASSWORD="${POSTGRES_PASSWORD:-bpm}"
+host="$(hostname -i || echo '127.0.0.1')"
+user="bonita"
+db="bonita"
+export PGPASSWORD="bpm"
 
 args=(
   # force postgres to not use the local unix socket (test "external" connectivity)

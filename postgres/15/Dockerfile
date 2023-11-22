@@ -22,6 +22,6 @@ VOLUME /opt/bonita/dump
 COPY 0_init-databases.sql /docker-entrypoint-initdb.d/0_init-databases.sql
 COPY 1_update-postgresql-conf.sh /docker-entrypoint-initdb.d/1_update-postgresql-conf.sh
 COPY 2_restore_dump.sh /docker-entrypoint-initdb.d/2_restore_dump.sh
-COPY healthcheck.sh /usr/local/bin/healthcheck.sh
+COPY --chmod=755 healthcheck.sh /usr/local/bin/healthcheck.sh
 
 HEALTHCHECK --interval=5s --retries=120 CMD ["/usr/local/bin/healthcheck.sh"]
