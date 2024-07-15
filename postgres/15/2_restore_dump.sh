@@ -11,7 +11,7 @@ else
   touch /var/lib/postgresql/restore.inProgress
   #  plain text dump
   if [ -f /opt/bonita/dump/bonita.dump ]; then
-    psql -d bonita -U bonita </opt/bonita/dump/bonita.dump
+    psql -d bonita --username=postgres </opt/bonita/dump/bonita.dump
     date >/var/lib/postgresql/restore.lastExecution
   fi
   if [ -f /opt/bonita/dump/business_data.dump ]; then
