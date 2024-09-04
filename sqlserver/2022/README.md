@@ -26,7 +26,7 @@ This image is configured with the two databases required by Bonita:
 The simple way:
 
 ```shell
-docker run -d --name bonita-sqlserver -p 1433:1433 bonitasoft/bonita-sqlserver:2022-CU4
+docker run -d --name bonita-sqlserver -p 1433:1433 bonitasoft/bonita-sqlserver:2022-CU13
 ```
 
 The more-complete way:
@@ -40,7 +40,7 @@ docker run -d \
       -p 1433:1433 \
       -p 135:135 \
       -p 51000:51000 \
-      bonitasoft/bonita-sqlserver:2022-CU4
+      bonitasoft/bonita-sqlserver:2022-CU13
 ```
 
 ## Container shell access
