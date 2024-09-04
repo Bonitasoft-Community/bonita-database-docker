@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2022-CU4-ubuntu-20.04
+FROM mcr.microsoft.com/mssql/server:2022-CU13-ubuntu-20.04
 
 # OCI annotations to image
 LABEL org.opencontainers.image.authors="Bonita R&D Engine Team <rd.engine@bonitasoft.com>" \
@@ -9,13 +9,13 @@ LABEL org.opencontainers.image.authors="Bonita R&D Engine Team <rd.engine@bonita
       org.opencontainers.image.vendor="Bonitasoft" \
       org.opencontainers.image.url="https://www.bonitasoft.com/" \
       org.opencontainers.image.licenses="GPL-2.0" \
-      org.opencontainers.image.version="2022-CU4"
+      org.opencontainers.image.version="2022-CU13"
 
-ENV ACCEPT_EULA Y
-ENV MSSQL_SA_PASSWORD DeLorean1985
-ENV MSSQL_RPC_PORT 135
-ENV MSSQL_DTC_TCP_PORT 51000
-ENV MSSQL_PID Express
+ENV ACCEPT_EULA=Y
+ENV MSSQL_SA_PASSWORD=DeLorean1985
+ENV MSSQL_RPC_PORT=135
+ENV MSSQL_DTC_TCP_PORT=51000
+ENV MSSQL_PID=Express
 
 # change active user to root
 USER root
