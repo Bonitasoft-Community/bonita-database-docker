@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2019-CU14-ubuntu-20.04
+FROM mcr.microsoft.com/mssql/server:2019-CU27-ubuntu-20.04
 
 LABEL maintainer="Bonita R&D Runtime team: anthony.birembaut@bonitasoft.com,\
 emmanuel.duchastenier@bonitasoft.com,\
