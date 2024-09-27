@@ -29,7 +29,7 @@ Run Docker command depending on the DB vendor and related version:
 docker build -t bonitasoft/bonita-<vendor>:<version> .
 ```
 
-For instance with PostgreSQL: `docker build -t bonitasoft/bonita-postgres:15.4 .`
+For instance with PostgreSQL: `docker build -t bonitasoft/bonita-postgres:16.4 .`
 
 ## Publish images on Docker Hub
 
