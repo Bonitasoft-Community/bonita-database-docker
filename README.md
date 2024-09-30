@@ -9,6 +9,7 @@
     * [Postgres 11](postgres/11/README.md)
     * [Postgres 12](postgres/12/README.md)
     * [Postgres 15](postgres/15/README.md)
+    * [Postgres 16](postgres/16/README.md)
 * Microsoft SQL Server (under the [MIT license](https://github.com/microsoft/mssql-docker/blob/master/LICENSE))
     * [SQL Server 2017](sqlserver/2017/README.md)
     * [SQL Server 2019](sqlserver/2019/README.md)
